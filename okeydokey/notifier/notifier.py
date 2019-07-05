@@ -1,7 +1,7 @@
 import logging
 from inspect import getmembers
 
-from notary import notifier
+from okeydokey import notifier
 
 
 class NotificationManager:

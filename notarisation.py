@@ -2,8 +2,8 @@ import logging
 from flask import Flask, request
 from os import environ
 from os.path import isfile, join, curdir
-from notary import Notary
-from notary.notifier.notifier import NotificationManager
+from okeydokey import Notary
+from okeydokey.notifier.notifier import NotificationManager
 from yaml import safe_load
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -12,7 +12,7 @@ app = Flask(__name__)
 notification_manager = NotificationManager()
 
 
-@app.route('/notary/<token>/<encryption_key>')
+@app.route('/okeydokey/<token>/<encryption_key>')
 def decrypt_data(token, encryption_key):
     expected_token = environ.get('token')
     if not expected_token == token:
@@ -53,7 +53,7 @@ if __name__ == '__main__':
             setattr(app, '_encrypted_from_env', True)
         else:
             raise ValueError('No file nor env var.')
-    with open(join(curdir, 'etc', 'notary.yaml'), 'rb') as configuration_data_file_handler:
+    with open(join(curdir, 'etc', 'okeydokey.yaml'), 'rb') as configuration_data_file_handler:
         configuration_data = safe_load(configuration_data_file_handler)
         if 'notifications' in configuration_data:
             if 'type' in configuration_data['notifications']:
